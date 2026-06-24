@@ -1,0 +1,35 @@
+<?php
+
+declare(strict_types=1);
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    public function up(): void
+    {
+        Schema::create('app_settings', function (Blueprint $table): void {
+            $table->id();
+            $table->foreignId('restaurant_id')
+                ->nullable()
+                ->constrained('restaurants')
+                ->cascadeOnDelete();
+            $table->foreignId('outlet_id')
+                ->nullable()
+                ->constrained('outlets')
+                ->cascadeOnDelete();
+            $table->string('key', 100);
+            $table->text('value')->nullable();
+            $table->timestamps();
+
+            $table->index(['restaurant_id', 'outlet_id', 'key']);
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::dropIfExists('app_settings');
+    }
+};

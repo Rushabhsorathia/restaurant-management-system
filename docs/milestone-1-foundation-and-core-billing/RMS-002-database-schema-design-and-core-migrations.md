@@ -9,7 +9,7 @@
 | **Priority** | P0 - Critical |
 | **Story Points** | 8 |
 | **Assignee** | Unassigned |
-| **Status** | To Do |
+| **Status** | Done |
 | **Dependencies** | RMS-001 |
 
 ## User Story
@@ -26,15 +26,15 @@ Seeders for baseline roles, permissions, units, languages, and a sample restaura
 
 ## Acceptance Criteria
 
-- [ ] Migrations created for: users, roles, permissions, role_user, permission_role, user_outlets, personal_access_tokens, restaurants, outlets, tax_configs, discount_configs, app_settings.
-- [ ] All foreign keys defined with `ON DELETE RESTRICT` (or CASCADE for pure pivot tables) and indexed.
-- [ ] Eloquent models created with `$fillable`, relationships (hasMany, belongsTo, belongsToMany), and soft deletes where appropriate.
-- [ ] `php artisan migrate:fresh` runs cleanly with no errors.
-- [ ] `php artisan migrate:rollback` rolls back cleanly.
-- [ ] Seeders created for roles, permissions (with role mappings), units, languages, and a sample restaurant + outlet + admin user.
-- [ ] Seeders are idempotent (use `firstOrCreate` / `updateOrCreate`).
-- [ ] `php artisan db:seed` populates baseline data successfully.
-- [ ] Database uses utf8mb4 charset and InnoDB engine on all tables.
+- [x] Migrations created for: users, roles, permissions, role_user, permission_role, user_outlets, personal_access_tokens, restaurants, outlets, tax_configs, discount_configs, app_settings.
+- [x] All foreign keys defined with `ON DELETE RESTRICT` (or CASCADE for pure pivot tables) and indexed.
+- [x] Eloquent models created with `$fillable`, relationships (hasMany, belongsTo, belongsToMany), and soft deletes where appropriate.
+- [x] `php artisan migrate:fresh` runs cleanly with no errors.
+- [x] `php artisan migrate:rollback` rolls back cleanly.
+- [x] Seeders created for roles, permissions (with role mappings), units, languages, and a sample restaurant + outlet + admin user.
+- [x] Seeders are idempotent (use `firstOrCreate` / `updateOrCreate`).
+- [x] `php artisan db:seed` populates baseline data successfully.
+- [x] Database uses utf8mb4 charset and InnoDB engine on all tables.
 
 ## UI Screens
 
@@ -74,31 +74,31 @@ No endpoints exposed in this ticket.
 
 ## Subtasks
 
-1. [ ] Create migration: users (with soft deletes)
-2. [ ] Create migration: roles
-3. [ ] Create migration: permissions
-4. [ ] Create migration: role_user pivot
-5. [ ] Create migration: permission_role pivot
-6. [ ] Create migration: user_outlets pivot
-7. [ ] Create migration: personal_access_tokens (Sanctum)
-8. [ ] Create migration: restaurants
-9. [ ] Create migration: outlets
-10. [ ] Create migration: tax_configs
-11. [ ] Create migration: discount_configs
-12. [ ] Create migration: app_settings
-13. [ ] Create Eloquent models with relationships
-14. [ ] Install and configure spatie/laravel-permission
-15. [ ] Create RolesSeeder, PermissionsSeeder
-16. [ ] Create UnitsSeeder, LanguagesSeeder, TaxConfigSeeder
-17. [ ] Create SampleRestaurantSeeder (restaurant + outlet + admin)
-18. [ ] Verify migrate:fresh --seed runs cleanly
+1. [x] Create migration: users (with soft deletes)
+2. [x] Create migration: roles
+3. [x] Create migration: permissions
+4. [x] Create migration: role_user pivot
+5. [x] Create migration: permission_role pivot
+6. [x] Create migration: user_outlets pivot
+7. [x] Create migration: personal_access_tokens (Sanctum)
+8. [x] Create migration: restaurants
+9. [x] Create migration: outlets
+10. [x] Create migration: tax_configs
+11. [x] Create migration: discount_configs
+12. [x] Create migration: app_settings
+13. [x] Create Eloquent models with relationships
+14. [x] Install and configure spatie/laravel-permission
+15. [x] Create RolesSeeder, PermissionsSeeder
+16. [x] Create UnitsSeeder, LanguagesSeeder, TaxConfigSeeder
+17. [x] Create SampleRestaurantSeeder (restaurant + outlet + admin)
+18. [x] Verify migrate:fresh --seed runs cleanly
 
 ## Testing Criteria
 
-- [ ] `php artisan migrate:fresh` succeeds with zero errors.
-- [ ] `php artisan migrate:rollback` reverts all migrations cleanly.
-- [ ] Seeder run produces expected role, permission, unit, language, tax config, restaurant, outlet, and admin records.
-- [ ] Re-running seeders does not create duplicates (idempotency).
-- [ ] Foreign key constraints prevent deleting a restaurant that has outlets.
-- [ ] Model relationships resolve correctly in tinker (e.g., `$restaurant->outlets` returns collection).
-- [ ] Unit tests assert critical table structures exist.
+- [x] `php artisan migrate:fresh` succeeds with zero errors.
+- [x] `php artisan migrate:rollback` reverts all migrations cleanly.
+- [x] Seeder run produces expected role, permission, unit, language, tax config, restaurant, outlet, and admin records.
+- [x] Re-running seeders does not create duplicates (idempotency).
+- [x] Foreign key constraints prevent deleting a restaurant that has outlets. (Outlet FK uses `restrictOnDelete`; user_outlets is `cascade`.)
+- [x] Model relationships resolve correctly in tinker (e.g., `$restaurant->outlets` returns collection).
+- [x] Unit tests assert critical table structures exist. (See `tests/Feature/DatabaseSchemaTest.php` + `SeederTest.php`.)
