@@ -22,12 +22,13 @@ class UserResource extends JsonResource
             'must_change_password' => (bool) $this->must_change_password,
             'last_login_at' => optional($this->last_login_at)?->toIso8601String(),
             'roles' => $this->whenLoaded('roles', fn () => $this->roles->pluck('name')->values()),
-            'permissions' => $this->when(
-                $this->resource?->relationLoaded('permissions') || $request->user()?->id === $this->id,
+            'permissions' => $this->whenLoaded(
+                'permissions',
                 fn () => $this->getAllPermissions()->pluck('name')->values()
             ),
             'outlets' => OutletResource::collection($this->whenLoaded('outlets')),
             'created_at' => optional($this->created_at)?->toIso8601String(),
+            'deleted_at' => optional($this->deleted_at)?->toIso8601String(),
         ];
     }
 }

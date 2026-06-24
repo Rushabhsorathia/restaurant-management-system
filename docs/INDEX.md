@@ -21,7 +21,7 @@ Quick lookup for all 56 Jira tickets across 6 milestones.
 | [RMS-001](milestone-1-foundation-and-core-billing/RMS-001-project-setup-and-boilerplate.md) | Project Setup & Boilerplate | P0 | 5 | Done |
 | [RMS-002](milestone-1-foundation-and-core-billing/RMS-002-database-schema-design-and-core-migrations.md) | Database Schema & Core Migrations | P0 | 8 | Done |
 | [RMS-003](milestone-1-foundation-and-core-billing/RMS-003-authentication-system.md) | Authentication System | P0 | 8 | Done |
-| [RMS-004](milestone-1-foundation-and-core-billing/RMS-004-user-and-role-management.md) | User & Role Management | P0 | 5 | To Do |
+| [RMS-004](milestone-1-foundation-and-core-billing/RMS-004-user-and-role-management.md) | User & Role Management | P0 | 5 | Done |
 | [RMS-005](milestone-1-foundation-and-core-billing/RMS-005-restaurant-and-outlet-setup.md) | Restaurant & Outlet Setup | P0 | 5 | To Do |
 | [RMS-006](milestone-1-foundation-and-core-billing/RMS-006-menu-management.md) | Menu Management | P0 | 8 | To Do |
 | [RMS-007](milestone-1-foundation-and-core-billing/RMS-007-table-and-floor-management.md) | Table & Floor Management | P0 | 5 | To Do |

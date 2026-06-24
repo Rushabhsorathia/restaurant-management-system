@@ -9,7 +9,7 @@
 | **Priority** | P0 - Critical |
 | **Story Points** | 8 |
 | **Assignee** | Unassigned |
-| **Status** | To Do |
+| **Status** | Done |
 | **Dependencies** | RMS-003 |
 
 ## User Story
@@ -24,20 +24,20 @@ Roles are predefined (admin, manager, cashier, waiter, chef, captain, hq_admin) 
 
 ## Acceptance Criteria
 
-- [ ] `GET /api/v1/users` returns a paginated, searchable list of users (filter by role, outlet, active status).
-- [ ] `POST /api/v1/users` creates a user with name, email, phone, password, roles, and outlet assignments.
-- [ ] `GET /api/v1/users/{id}` returns a single user with roles, permissions, and outlets.
-- [ ] `PUT /api/v1/users/{id}` updates user details, roles, and outlets.
-- [ ] `PATCH /api/v1/users/{id}/status` activates/deactivates a user.
-- [ ] `POST /api/v1/users/{id}/reset-password` triggers a password reset for the user.
-- [ ] `DELETE /api/v1/users/{id}` soft-deletes a user.
-- [ ] `GET /api/v1/roles` lists all roles; `GET /api/v1/roles/{id}/permissions` lists permissions for a role.
-- [ ] `PUT /api/v1/roles/{id}/permissions` updates the permission set for a role.
-- [ ] `GET /api/v1/permissions` lists all permissions grouped by module.
-- [ ] Frontend User List screen with search, role filter, outlet filter, and active filter.
-- [ ] Frontend User Form to create/edit with role multi-select and outlet multi-select.
-- [ ] Frontend Roles & Permissions screen with a permission matrix (roles x permissions checkboxes).
-- [ ] Only users with `users.manage` permission can access these screens (admin role by default).
+- [x] `GET /api/v1/users` returns a paginated, searchable list of users (filter by role, outlet, active status).
+- [x] `POST /api/v1/users` creates a user with name, email, phone, password, roles, and outlet assignments.
+- [x] `GET /api/v1/users/{id}` returns a single user with roles, permissions, and outlets.
+- [x] `PUT /api/v1/users/{id}` updates user details, roles, and outlets.
+- [x] `PATCH /api/v1/users/{id}/status` activates/deactivates a user.
+- [x] `POST /api/v1/users/{id}/reset-password` triggers a password reset for the user.
+- [x] `DELETE /api/v1/users/{id}` soft-deletes a user.
+- [x] `GET /api/v1/roles` lists all roles; `GET /api/v1/roles/{id}/permissions` lists permissions for a role.
+- [x] `PUT /api/v1/roles/{id}/permissions` updates the permission set for a role.
+- [x] `GET /api/v1/permissions` lists all permissions grouped by module.
+- [x] Frontend User List screen with search, role filter, outlet filter, and active filter.
+- [x] Frontend User Form to create/edit with role multi-select and outlet multi-select.
+- [x] Frontend Roles & Permissions screen with a permission matrix (roles x permissions checkboxes).
+- [x] Only users with `users.manage` permission can access these screens (admin role by default).
 
 ## UI Screens
 
@@ -87,28 +87,28 @@ Uses tables from RMS-002: `users`, `roles`, `permissions`, `role_user`, `permiss
 
 ## Subtasks
 
-1. [ ] Create UserController (index, store, show, update, destroy)
-2. [ ] Create status toggle and reset-password endpoints
-3. [ ] Create Form Requests (StoreUserRequest, UpdateUserRequest)
-4. [ ] Create UserPolicy for authorization
-5. [ ] Create UserResource (with roles, permissions, outlets)
-6. [ ] Create RoleController (index, permissions, updatePermissions)
-7. [ ] Create PermissionController (index grouped by module)
-8. [ ] Frontend: User List page with filters and table
-9. [ ] Frontend: User Form (create/edit) with role + outlet multi-select
-10. [ ] Frontend: Roles & Permissions matrix screen
-11. [ ] Frontend: RequirePermission guard component
-12. [ ] Write backend tests for CRUD and authorization
-13. [ ] Seed default role-permission mappings
+1. [x] Create UserController (index, store, show, update, destroy)
+2. [x] Create status toggle and reset-password endpoints
+3. [x] Create Form Requests (StoreUserRequest, UpdateUserRequest)
+4. [x] Create UserPolicy for authorization
+5. [x] Create UserResource (with roles, permissions, outlets)
+6. [x] Create RoleController (index, permissions, updatePermissions)
+7. [x] Create PermissionController (index grouped by module)
+8. [x] Frontend: User List page with filters and table
+9. [x] Frontend: User Form (create/edit) with role + outlet multi-select
+10. [x] Frontend: Roles & Permissions matrix screen
+11. [x] Frontend: RequirePermission guard component
+12. [x] Write backend tests for CRUD and authorization
+13. [x] Seed default role-permission mappings
 
 ## Testing Criteria
 
-- [ ] Admin can create a user with roles and outlets; user appears in list.
-- [ ] Non-admin (e.g., cashier) receives 403 on user management endpoints.
-- [ ] Updating a user syncs roles and outlets correctly.
-- [ ] Deactivating a user prevents login.
-- [ ] Reset password sends a reset email.
-- [ ] Soft-deleted users excluded from list but restorable.
-- [ ] Permission matrix changes persist and affect authorization immediately.
-- [ ] Search and filters return correct subsets.
-- [ ] Validation rejects duplicate email and missing required fields.
+- [x] Admin can create a user with roles and outlets; user appears in list.
+- [x] Non-admin (e.g., cashier) receives 403 on user management endpoints.
+- [x] Updating a user syncs roles and outlets correctly.
+- [x] Deactivating a user prevents login.
+- [x] Reset password sends a reset email.
+- [x] Soft-deleted users excluded from list but restorable.
+- [x] Permission matrix changes persist and affect authorization immediately.
+- [x] Search and filters return correct subsets.
+- [x] Validation rejects duplicate email and missing required fields.

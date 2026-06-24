@@ -21,7 +21,7 @@ class PermissionsSeeder extends Seeder
         $modules = [
             'menu', 'order', 'bill', 'kot', 'payment',
             'table', 'customer', 'inventory', 'supplier',
-            'purchase', 'report', 'settings', 'user',
+            'purchase', 'report', 'settings', 'users',
             'role', 'outlet', 'restaurant',
         ];
 
