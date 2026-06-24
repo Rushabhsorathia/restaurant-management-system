@@ -1,11 +1,18 @@
+import { Navigate } from 'react-router-dom';
 import { useHealth } from '@/hooks/useHealth';
+import { useAuthStore } from '@/stores/authStore';
 import { APP_NAME, APP_VERSION } from '@/constants/app';
 import { formatIsoDate } from '@/utils/date';
 import { cn } from '@/utils/cn';
 import { Card } from '@/components/common/Card';
 
 export default function LandingPage() {
+  const token = useAuthStore((s) => s.token);
   const { data, isLoading, isError, refetch, isFetching } = useHealth();
+
+  if (token) {
+    return <Navigate to="/dashboard" replace />;
+  }
 
   const apiReachable = !isError && Boolean(data);
   const healthy = apiReachable && data?.status === 'ok';

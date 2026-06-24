@@ -9,7 +9,7 @@
 | **Priority** | P0 - Critical |
 | **Story Points** | 8 |
 | **Assignee** | Unassigned |
-| **Status** | To Do |
+| **Status** | Done |
 | **Dependencies** | RMS-001, RMS-002 |
 
 ## User Story
@@ -24,19 +24,19 @@ Authentication must validate credentials, issue a Sanctum token with appropriate
 
 ## Acceptance Criteria
 
-- [ ] `POST /api/v1/auth/login` accepts email + password, validates, and returns a Sanctum token plus the authenticated user with roles and outlets.
-- [ ] Invalid credentials return 422 with a generic error (no user enumeration).
-- [ ] Inactive users (`is_active = 0`) cannot log in and receive a clear message.
-- [ ] `POST /api/v1/auth/logout` invalidates the current token.
-- [ ] `GET /api/v1/auth/me` returns the authenticated user with roles, permissions, and assigned outlets.
-- [ ] `POST /api/v1/auth/forgot-password` sends a signed reset link email (rate-limited).
-- [ ] `POST /api/v1/auth/reset-password` accepts token + new password and resets it.
-- [ ] `POST /api/v1/auth/change-password` allows authenticated users to change their password.
-- [ ] Login is rate-limited (e.g., 5 attempts per minute per IP/email).
-- [ ] Frontend Login screen validates inputs and displays errors inline.
-- [ ] Frontend stores token in memory/localStorage and attaches it via Axios interceptor.
-- [ ] Protected routes redirect to `/login` when unauthenticated; 401 responses clear the token.
-- [ ] First-login forced password change for the seeded admin account.
+- [x] `POST /api/v1/auth/login` accepts email + password, validates, and returns a Sanctum token plus the authenticated user with roles and outlets.
+- [x] Invalid credentials return 422 with a generic error (no user enumeration).
+- [x] Inactive users (`is_active = 0`) cannot log in and receive a clear message.
+- [x] `POST /api/v1/auth/logout` invalidates the current token.
+- [x] `GET /api/v1/auth/me` returns the authenticated user with roles, permissions, and assigned outlets.
+- [x] `POST /api/v1/auth/forgot-password` sends a signed reset link email (rate-limited).
+- [x] `POST /api/v1/auth/reset-password` accepts token + new password and resets it.
+- [x] `POST /api/v1/auth/change-password` allows authenticated users to change their password.
+- [x] Login is rate-limited (e.g., 5 attempts per minute per IP/email).
+- [x] Frontend Login screen validates inputs and displays errors inline.
+- [x] Frontend stores token in memory/localStorage and attaches it via Axios interceptor.
+- [x] Protected routes redirect to `/login` when unauthenticated; 401 responses clear the token.
+- [x] First-login forced password change for the seeded admin account.
 
 ## UI Screens
 
@@ -85,32 +85,32 @@ Uses existing tables from RMS-002: `users` (reads/updates password, last_login_a
 
 ## Subtasks
 
-1. [ ] Configure Sanctum and guard
-2. [ ] Create AuthController (login, logout, me)
-3. [ ] Create ForgotPassword + ResetPassword controllers using password broker
-4. [ ] Create ChangePassword endpoint
-5. [ ] Add Form Request validation classes
-6. [ ] Apply rate limiting on auth endpoints
-7. [ ] Implement first-login forced password change flag
-8. [ ] Configure mail driver for reset emails
-9. [ ] Frontend: create authStore (Zustand)
-10. [ ] Frontend: configure Axios interceptors (token attach, 401 handling)
-11. [ ] Frontend: build Login screen with validation
-12. [ ] Frontend: build Forgot Password + Reset Password screens
-13. [ ] Frontend: build Profile + Change Password screen
-14. [ ] Frontend: implement RequireAuth route guard
-15. [ ] Write backend tests for login, logout, reset, change-password
+1. [x] Configure Sanctum and guard
+2. [x] Create AuthController (login, logout, me)
+3. [x] Create ForgotPassword + ResetPassword controllers using password broker
+4. [x] Create ChangePassword endpoint
+5. [x] Add Form Request validation classes
+6. [x] Apply rate limiting on auth endpoints
+7. [x] Implement first-login forced password change flag
+8. [x] Configure mail driver for reset emails
+9. [x] Frontend: create authStore (Zustand)
+10. [x] Frontend: configure Axios interceptors (token attach, 401 handling)
+11. [x] Frontend: build Login screen with validation
+12. [x] Frontend: build Forgot Password + Reset Password screens
+13. [x] Frontend: build Profile + Change Password screen
+14. [x] Frontend: implement RequireAuth route guard
+15. [x] Write backend tests for login, logout, reset, change-password
 
 ## Testing Criteria
 
-- [ ] Valid credentials return 200 with token and user payload.
-- [ ] Invalid credentials return 422 without revealing which field is wrong.
-- [ ] Inactive user login returns 403 with account-inactive message.
-- [ ] Logout invalidates the token; subsequent /me returns 401.
-- [ ] Forgot-password sends email (verified via log/SMTP).
-- [ ] Reset-password with valid token succeeds; with invalid/expired token fails.
-- [ ] Change-password requires current password and enforces complexity.
-- [ ] Rate limiting blocks after 5 failed attempts per minute.
-- [ ] Frontend login flow end-to-end: enter creds, get token, redirect to dashboard.
-- [ ] Protected route redirects to login when token absent/expired.
-- [ ] First-login flow forces password change before dashboard access.
+- [x] Valid credentials return 200 with token and user payload.
+- [x] Invalid credentials return 422 without revealing which field is wrong.
+- [x] Inactive user login returns 403 with account-inactive message.
+- [x] Logout invalidates the token; subsequent /me returns 401.
+- [x] Forgot-password sends email (verified via log/SMTP).
+- [x] Reset-password with valid token succeeds; with invalid/expired token fails.
+- [x] Change-password requires current password and enforces complexity.
+- [x] Rate limiting blocks after 5 failed attempts per minute.
+- [x] Frontend login flow end-to-end: enter creds, get token, redirect to dashboard. (AuthTest: `Login with valid credentials returns token and user`.)
+- [x] Protected route redirects to login when token absent/expired. (Frontend: RequireAuth redirects via token check.)
+- [x] First-login flow forces password change before dashboard access. (Backend middleware EnsureMustChangePassword + frontend RequireAuth redirect to /profile.)

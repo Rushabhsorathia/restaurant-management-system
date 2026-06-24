@@ -1,17 +1,26 @@
 import axios, { AxiosError, type AxiosInstance, type InternalAxiosRequestConfig } from 'axios';
 import { API_BASE_URL } from '@/constants/app';
 
-const STORAGE_KEY = 'rms.auth.token';
+export const AUTH_TOKEN_STORAGE_KEY = 'rms.auth.token';
+export const AUTH_UNAUTHORIZED_EVENT = 'rms:auth:unauthorized';
 
 export function getAuthToken(): string | null {
-  return localStorage.getItem(STORAGE_KEY);
+  try {
+    return localStorage.getItem(AUTH_TOKEN_STORAGE_KEY);
+  } catch {
+    return null;
+  }
 }
 
 export function setAuthToken(token: string | null): void {
-  if (token) {
-    localStorage.setItem(STORAGE_KEY, token);
-  } else {
-    localStorage.removeItem(STORAGE_KEY);
+  try {
+    if (token) {
+      localStorage.setItem(AUTH_TOKEN_STORAGE_KEY, token);
+    } else {
+      localStorage.removeItem(AUTH_TOKEN_STORAGE_KEY);
+    }
+  } catch {
+    // ignore storage errors (private mode, etc.)
   }
 }
 
@@ -37,8 +46,8 @@ api.interceptors.response.use(
   (error: AxiosError) => {
     if (error.response?.status === 401) {
       setAuthToken(null);
-      if (typeof window !== 'undefined' && !window.location.pathname.startsWith('/login')) {
-        window.location.assign('/login');
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent(AUTH_UNAUTHORIZED_EVENT));
       }
     }
     return Promise.reject(error);
