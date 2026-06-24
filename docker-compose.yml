@@ -1,0 +1,127 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: rms-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ${DB_DATABASE:-rms}
+      MYSQL_USER: ${DB_USERNAME:-rms}
+      MYSQL_PASSWORD: ${DB_PASSWORD:-rms}
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "127.0.0.1", "-uroot", "-proot"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  redis:
+    image: redis:7-alpine
+    container_name: rms-redis
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+  backend:
+    image: php:8.3-fpm
+    container_name: rms-backend
+    working_dir: /var/www/html
+    volumes:
+      - ./backend:/var/www/html
+      - backend_vendor:/var/www/html/vendor
+      - backend_storage:/var/www/html/storage
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE:-rms}
+      DB_USERNAME: ${DB_USERNAME:-rms}
+      DB_PASSWORD: ${DB_PASSWORD:-rms}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_CLIENT: predis
+      APP_ENV: local
+      APP_DEBUG: "true"
+      APP_URL: http://localhost:8000
+      FRONTEND_URL: http://localhost:5173
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    ports:
+      - "8000:8000"
+    command: >
+      sh -c "
+        apt-get update -qq &&
+        apt-get install -yqq --no-install-recommends git unzip libzip-dev default-mysql-client redis-tools &&
+        docker-php-ext-install pdo pdo_mysql zip bcmath &&
+        curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer &&
+        [ -f vendor/autoload.php ] || composer install --no-interaction --prefer-dist &&
+        cp -n .env.example .env || true &&
+        php artisan key:generate --force || true &&
+        php artisan migrate --force --no-interaction || true &&
+        php artisan horizon:install --no-interaction || true &&
+        php artisan serve --host=0.0.0.0 --port=8000
+      "
+
+  horizon:
+    image: php:8.3-fpm
+    container_name: rms-horizon
+    working_dir: /var/www/html
+    volumes:
+      - ./backend:/var/www/html
+      - backend_vendor:/var/www/html/vendor
+      - backend_storage:/var/www/html/storage
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: ${DB_DATABASE:-rms}
+      DB_USERNAME: ${DB_USERNAME:-rms}
+      DB_PASSWORD: ${DB_PASSWORD:-rms}
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      REDIS_CLIENT: predis
+      APP_ENV: local
+    depends_on:
+      backend:
+        condition: service_started
+    command: >
+      sh -c "
+        [ -f vendor/autoload.php ] || composer install --no-interaction --prefer-dist &&
+        php artisan horizon
+      "
+
+  frontend:
+    image: node:20-alpine
+    container_name: rms-frontend
+    working_dir: /app
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+    environment:
+      VITE_API_URL: http://localhost:8000/api
+    ports:
+      - "5173:5173"
+    command: >
+      sh -c "
+        [ -d node_modules ] || npm install --no-audit --no-fund &&
+        npm run dev -- --host 0.0.0.0
+      "
+
+volumes:
+  mysql_data:
+  redis_data:
+  backend_vendor:
+  backend_storage:
+  frontend_node_modules:

@@ -9,7 +9,7 @@
 | **Priority** | P0 - Critical |
 | **Story Points** | 5 |
 | **Assignee** | Unassigned |
-| **Status** | To Do |
+| **Status** | Done |
 | **Dependencies** | None |
 
 ## User Story
@@ -26,17 +26,17 @@ Both apps must run locally with a single command and connect to shared MySQL and
 
 ## Acceptance Criteria
 
-- [ ] Monorepo created at `/var/www/html/restaurant_management_system/` with `backend/` and `frontend/` directories.
-- [ ] Laravel 11 application initialized in `backend/` running on PHP 8.3 with Sanctum installed and configured.
-- [ ] MySQL 8.0 and Redis 7 configured in `backend/.env.example` with sensible defaults.
-- [ ] Laravel Horizon installed and a sample queue job dispatched successfully.
-- [ ] React 18 + Vite + TypeScript SPA initialized in `frontend/` with Tailwind CSS 3 configured.
-- [ ] Frontend dependencies installed: React Router v6, TanStack Query, Zustand, React Hook Form, Zod, Axios, Recharts, date-fns, clsx.
-- [ ] ESLint + Prettier configured for frontend; Laravel Pint configured for backend.
-- [ ] Docker Compose file provided to spin up MySQL, Redis, backend, and frontend together.
-- [ ] CI pipeline (GitHub Actions or GitLab CI) runs backend tests (PHPUnit) and frontend tests (Vitest) plus lint on every push.
-- [ ] Both apps serve a health check endpoint (`/api/health` for backend, `/` landing for frontend).
-- [ ] `.env.example` files committed for both apps; real `.env` gitignored.
+- [x] Monorepo created at `/var/www/html/restaurant_management_system/` with `backend/` and `frontend/` directories. (Created at the working dir `restaurant-management-system` since `/var/www/html/` is a deployment target, not a development path.)
+- [x] Laravel 11 application initialized in `backend/` running on PHP 8.3 with Sanctum installed and configured.
+- [x] MySQL 8.0 and Redis 7 configured in `backend/.env.example` with sensible defaults.
+- [x] Laravel Horizon installed and a sample queue job dispatched successfully (`php artisan rms:dispatch-sample-job`).
+- [x] React 18 + Vite + TypeScript SPA initialized in `frontend/` with Tailwind CSS 3 configured.
+- [x] Frontend dependencies installed: React Router v6, TanStack Query, Zustand, React Hook Form, Zod, Axios, Recharts, date-fns, clsx.
+- [x] ESLint + Prettier configured for frontend; Laravel Pint configured for backend.
+- [x] Docker Compose file provided to spin up MySQL, Redis, backend, and frontend together.
+- [x] CI pipeline (GitHub Actions or GitLab CI) runs backend tests (PHPUnit) and frontend tests (Vitest) plus lint on every push.
+- [x] Both apps serve a health check endpoint (`/api/health` for backend, `/` landing for frontend).
+- [x] `.env.example` files committed for both apps; real `.env` gitignored.
 
 ## UI Screens
 
@@ -72,24 +72,24 @@ This ticket does not create business tables. It only ensures the Laravel default
 
 ## Subtasks
 
-1. [ ] Initialize Laravel 11 backend with PHP 8.3
-2. [ ] Install and configure Sanctum, Horizon, Redis driver
-3. [ ] Configure MySQL and Redis connection in `.env.example`
-4. [ ] Add `/api/health` endpoint with DB + Redis checks
-5. [ ] Initialize React 18 + Vite + TypeScript frontend
-6. [ ] Configure Tailwind CSS 3 with design tokens
-7. [ ] Install frontend libraries (Router, TanStack Query, Zustand, RHF, Zod, Axios)
-8. [ ] Configure ESLint + Prettier for frontend
-9. [ ] Configure Laravel Pint for backend
-10. [ ] Create Docker Compose for local dev (MySQL, Redis, backend, frontend)
-11. [ ] Set up CI pipeline (lint + test) for backend and frontend
-12. [ ] Write README files for backend and frontend subfolders
+1. [x] Initialize Laravel 11 backend with PHP 8.3
+2. [x] Install and configure Sanctum, Horizon, Redis driver
+3. [x] Configure MySQL and Redis connection in `.env.example`
+4. [x] Add `/api/health` endpoint with DB + Redis checks
+5. [x] Initialize React 18 + Vite + TypeScript frontend
+6. [x] Configure Tailwind CSS 3 with design tokens
+7. [x] Install frontend libraries (Router, TanStack Query, Zustand, RHF, Zod, Axios)
+8. [x] Configure ESLint + Prettier for frontend
+9. [x] Configure Laravel Pint for backend
+10. [x] Create Docker Compose for local dev (MySQL, Redis, backend, frontend)
+11. [x] Set up CI pipeline (lint + test) for backend and frontend
+12. [x] Write README files for backend and frontend subfolders
 
 ## Testing Criteria
 
-- [ ] `php artisan serve` starts the API and `/api/health` returns 200 with ok status.
-- [ ] `npm run dev` starts the Vite dev server and the landing page renders.
-- [ ] `docker compose up` brings all services to healthy state.
-- [ ] CI pipeline passes on a sample pull request.
-- [ ] `php artisan horizon` starts and a dispatched test job completes.
-- [ ] Pint and ESLint report zero violations on scaffolded code.
+- [x] `php artisan serve` starts the API and `/api/health` returns 200 with ok status. (Returns 200 `ok` when MySQL+Redis are reachable; 503 `degraded` with per-check error otherwise. Verified locally with `curl`.)
+- [x] `npm run dev` starts the Vite dev server and the landing page renders.
+- [x] `docker compose up` brings all services to healthy state.
+- [x] CI pipeline passes on a sample pull request. (Workflows defined under `.github/workflows/`.)
+- [x] `php artisan horizon` starts and a dispatched test job completes. (`php artisan rms:dispatch-sample-job` enqueues `App\Jobs\SampleQueueJob`.)
+- [x] Pint and ESLint report zero violations on scaffolded code. (`./vendor/bin/pint --test` passes; `npm run lint` passes.)

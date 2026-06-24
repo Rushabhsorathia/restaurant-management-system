@@ -1,0 +1,32 @@
+node_modules
+dist
+build
+coverage
+.vscode
+.idea
+.DS_Store
+*.log
+
+# Editor / OS
+Thumbs.db
+*.swp
+*.swo
+
+# Local secrets
+.env
+.env.local
+.env.*.local
+
+# Backend build/cache (if someone runs vendor at the repo root by accident)
+backend/vendor
+backend/storage/framework/cache
+backend/storage/framework/sessions
+backend/storage/framework/views
+backend/storage/logs
+backend/.phpunit.cache
+backend/.phpunit.result.cache
+
+# Frontend caches
+frontend/.vite
+frontend/.cache
+frontend/.eslintcache
