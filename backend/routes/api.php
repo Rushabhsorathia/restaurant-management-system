@@ -6,8 +6,12 @@ use App\Http\Controllers\Api\HealthController;
 use App\Http\Controllers\Api\V1\Auth\AuthController;
 use App\Http\Controllers\Api\V1\Auth\ChangePasswordController;
 use App\Http\Controllers\Api\V1\Auth\PasswordResetController;
+use App\Http\Controllers\Api\V1\MeOutletController;
+use App\Http\Controllers\Api\V1\Outlets\OutletController;
+use App\Http\Controllers\Api\V1\Restaurant\RestaurantController;
 use App\Http\Controllers\Api\V1\Roles\PermissionController;
 use App\Http\Controllers\Api\V1\Roles\RoleController;
+use App\Http\Controllers\Api\V1\TaxConfigs\TaxConfigController;
 use App\Http\Controllers\Api\V1\Users\UserController;
 use App\Http\Controllers\Api\V1\Users\UserResetPasswordController;
 use App\Http\Controllers\Api\V1\Users\UserStatusController;
@@ -25,14 +29,14 @@ Route::prefix('v1')->group(function (): void {
 
         Route::post('reset-password', [PasswordResetController::class, 'reset'])->name('api.v1.auth.reset-password');
 
-        Route::middleware(['auth:sanctum', 'must.change.password'])->group(function (): void {
+Route::middleware(['auth:sanctum', 'must.change.password'])->group(function (): void {
             Route::get('me', [AuthController::class, 'me'])->name('api.v1.auth.me');
             Route::post('logout', [AuthController::class, 'logout'])->name('api.v1.auth.logout');
             Route::post('change-password', ChangePasswordController::class)->name('api.v1.auth.change-password');
         });
     });
 
-    Route::middleware(['auth:sanctum', 'must.change.password'])->group(function (): void {
+    Route::middleware(['auth:sanctum', 'must.change.password', 'tenant.scope'])->group(function (): void {
         // Users
         Route::get('users', [UserController::class, 'index'])->name('api.v1.users.index');
         Route::post('users', [UserController::class, 'store'])->name('api.v1.users.store');
@@ -47,6 +51,27 @@ Route::prefix('v1')->group(function (): void {
         Route::get('roles/{role}/permissions', [RoleController::class, 'permissions'])->name('api.v1.roles.permissions');
         Route::put('roles/{role}/permissions', [RoleController::class, 'updatePermissions'])->name('api.v1.roles.update-permissions');
         Route::get('permissions', PermissionController::class)->name('api.v1.permissions.index');
+
+        // Restaurant profile
+        Route::get('restaurant', [RestaurantController::class, 'show'])->name('api.v1.restaurant.show');
+        Route::put('restaurant', [RestaurantController::class, 'update'])->name('api.v1.restaurant.update');
+        Route::post('restaurant/logo', [RestaurantController::class, 'uploadLogo'])->name('api.v1.restaurant.logo');
+
+        // Outlets
+        Route::get('outlets', [OutletController::class, 'index'])->name('api.v1.outlets.index');
+        Route::post('outlets', [OutletController::class, 'store'])->name('api.v1.outlets.store');
+        Route::get('outlets/{outlet}', [OutletController::class, 'show'])->name('api.v1.outlets.show');
+        Route::put('outlets/{outlet}', [OutletController::class, 'update'])->name('api.v1.outlets.update');
+        Route::patch('outlets/{outlet}/status', [OutletController::class, 'status'])->name('api.v1.outlets.status');
+
+        // Tax configs
+        Route::get('tax-configs', [TaxConfigController::class, 'index'])->name('api.v1.tax-configs.index');
+        Route::post('tax-configs', [TaxConfigController::class, 'store'])->name('api.v1.tax-configs.store');
+        Route::put('tax-configs/{taxConfig}', [TaxConfigController::class, 'update'])->name('api.v1.tax-configs.update');
+        Route::delete('tax-configs/{taxConfig}', [TaxConfigController::class, 'destroy'])->name('api.v1.tax-configs.destroy');
+
+        // Current user's accessible outlets
+        Route::get('me/outlets', [MeOutletController::class, 'index'])->name('api.v1.me.outlets');
     });
 
     Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
