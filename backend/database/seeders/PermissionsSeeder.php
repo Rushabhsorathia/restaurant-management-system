@@ -22,7 +22,7 @@ class PermissionsSeeder extends Seeder
             'menu', 'order', 'bill', 'kot', 'payment',
             'table', 'customer', 'inventory', 'supplier',
             'purchase', 'report', 'settings', 'users',
-            'role', 'outlet', 'restaurant',
+            'role', 'outlets', 'restaurant', 'tax',
         ];
 
         $actions = ['view', 'create', 'update', 'delete'];

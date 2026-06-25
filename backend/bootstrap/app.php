@@ -18,6 +18,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
             'must.change.password' => EnsureMustChangePassword::class,
+            'tenant.scope' => \App\Http\Middleware\TenantScope::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
